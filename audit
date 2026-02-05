@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audit Propreté GXO</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #003A8F, #7AC143);
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: white;
+      margin-bottom: 20px;
+    }
+    .box {
+      background: white;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    .row {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    label {
+      font-weight: bold;
+      font-size: 14px;
+    }
+    input, select, textarea {
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+    .critere {
+      margin-bottom: 10px;
+    }
+    button {
+      width: 100%;
+      padding: 15px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+      color: white;
+    }
+    .calc { background: #003A8F; }
+    .pdf { background: #7AC143; }
+    #resultat {
+      margin-top: 15px;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: white;
+    }
+    @media print {
+      button { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Audit Propreté – GXO</h1>
+
+  <!-- INFOS AUDIT -->
+  <div class="box">
+    <div class="row">
+      <div>
+        <label>Nom de l’auditeur</label>
+        <input type="text" id="auditeur" placeholder="Ex : Walid Adjout">
+      </div>
+      <div>
+        <label>Date de l’audit</label>
+        <input type="date" id="dateAudit">
+      </div>
+      <div>
+        <label>Zone</label>
+        <select id="zone">
+          <option value="">-- Sélectionner la zone --</option>
+          <option value="ND4">ND4</option>
+          <option value="CD5">CD5</option>
+          <option value="RIU">RIU</option>
+          <option value="ECOM">ECOM</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- CRITERES -->
+  <div id="criteres"></div>
+
+  <!-- COMMENTAIRES -->
+  <div class="box">
+    <div class="row">
+      <div>
+        <label>Commentaire</label>
+        <textarea id="commentaire" placeholder="Saisir les remarques générales sur l’audit..."></textarea>
+      </div>
+      <div>
+        <label>Proposition d’amélioration</label>
+        <textarea id="amelioration" placeholder="Saisir les actions ou pistes d’amélioration proposées..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <button class="calc" onclick="calculer()">Calculer le score</button>
+  <button class="pdf" onclick="window.print()">Exporter en PDF</button>
+
+  <div id="resultat"></div>
+
+  <script>
+    const criteres = [
+      "Sols",
+      "Murs et vitres",
+      "Sanitaires",
+      "Poubelles",
+      "Plans de travail",
+      "Matériel de nettoyage",
+      "Odeurs / ambiance"
+    ];
+
+    const valeurs = {
+      "Bien": 2,
+      "Moyen": 1,
+      "Mauvais": 0
+    };
+
+    const container = document.getElementById('criteres');
+
+    criteres.forEach(c => {
+      const div = document.createElement('div');
+      div.className = 'box critere';
+      div.innerHTML = `
+        <strong>${c}</strong><br><br>
+        <label>Évaluation</label>
+        <select class="note">
+          <option value="">-- Choisir --</option>
+          <option value="Bien">Bien</option>
+          <option value="Moyen">Moyen</option>
+          <option value="Mauvais">Mauvais</option>
+          <option value="NA">Non applicable</option>
+        </select>
+        <br><br>
+        <label>Photo</label>
+        <input type="file" accept="image/*">
+      `;
+      container.appendChild(div);
+    });
+
+    function calculer() {
+      const auditeur = document.getElementById('auditeur').value;
+      const date = document.getElementById('dateAudit').value;
+      const zone = document.getElementById('zone').value;
+
+      if (!auditeur || !date || !zone) {
+        alert("Merci de renseigner le nom de l’auditeur, la date et la zone");
+        return;
+      }
+
+      const notes = document.querySelectorAll('.note');
+      let total = 0;
+      let max = 0;
+
+      for (let n of notes) {
+        if (n.value === "") {
+          alert("Merci de remplir toutes les évaluations");
+          return;
+        }
+        if (n.value !== "NA") {
+          total += valeurs[n.value];
+          max += 2;
+        }
+      }
+
+      if (max === 0) {
+        alert("Tous les critères sont non applicables");
+        return;
+      }
+
+      const pourcentage = Math.round((total / max) * 100);
+      const res = document.getElementById('resultat');
+      let couleur = '#e74c3c';
+      let texte = 'Insuffisant';
+
+      if (pourcentage >= 80) {
+        couleur = '#7AC143';
+        texte = 'Très bon';
+      } else if (pourcentage >= 60) {
+        couleur = '#f39c12';
+        texte = 'Acceptable';
+      }
+
+      res.style.background = couleur;
+      res.innerHTML = `
+        Auditeur : ${auditeur}<br>
+        Date : ${date}<br>
+        Zone : ${zone}<br><br>
+        Score : ${pourcentage}%<br>${texte}
+      `;
+    }
+  </script>
+</body>
+</html>
