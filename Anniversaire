@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joyeux Anniversaire Inès</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at top, #0f2027, #203a43, #1c1c1c);
+    height: 100vh;
+    overflow: hidden;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Glass Card */
+.container {
+    position: relative;
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.07);
+    padding: 50px;
+    border-radius: 30px;
+    text-align: center;
+    max-width: 650px;
+    width: 90%;
+    box-shadow: 0 0 60px rgba(0,0,0,0.6);
+    animation: fadeIn 2s ease;
+    z-index: 2;
+}
+
+h1 {
+    font-size: 2.7em;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.name {
+    color: #00f5d4;
+    font-weight: 700;
+}
+
+.subtitle {
+    font-weight: 300;
+    margin-bottom: 25px;
+    opacity: 0.8;
+}
+
+.message {
+    font-size: 1.2em;
+    line-height: 1.6;
+    min-height: 80px;
+}
+
+.signature {
+    margin-top: 30px;
+    font-weight: 500;
+    opacity: 0;
+    transition: 1s;
+}
+
+.heart {
+    font-size: 2em;
+    margin-top: 20px;
+    animation: beat 1.4s infinite;
+    color: #ff4d6d;
+}
+
+/* ECG */
+.ecg {
+    position: absolute;
+    bottom: 0;
+    width: 200%;
+    height: 150px;
+    opacity: 0.4;
+}
+
+path {
+    stroke: #00f5d4;
+    stroke-width: 3;
+    fill: none;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: ecgMove 5s linear infinite;
+}
+
+@keyframes ecgMove {
+    0% { stroke-dashoffset: 1000; }
+    100% { stroke-dashoffset: 0; }
+}
+
+@keyframes beat {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.25); }
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(40px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+/* Particles */
+.particle {
+    position: absolute;
+    background: rgba(255,255,255,0.25);
+    border-radius: 50%;
+    animation: float linear infinite;
+}
+
+@keyframes float {
+    from { transform: translateY(100vh); }
+    to { transform: translateY(-10vh); }
+}
+
+/* Button */
+button {
+    margin-top: 25px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 30px;
+    background: #00f5d4;
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+    background: #00c9a7;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Joyeux Anniversaire <span class="name">Inès Ighil Agha</span> 🎉</h1>
+    <div class="subtitle">Future grande médecin 🩺</div>
+    <div class="message" id="typedText"></div>
+    <button onclick="showSignature()">Une petite surprise</button>
+    <div class="signature" id="signature">Continue d'inspirer, de soigner et d'illuminer autour de toi. 🌟</div>
+    <div class="heart">🫀</div>
+</div>
+
+<svg class="ecg" viewBox="0 0 1000 200">
+    <path d="M0 100 L100 100 L150 50 L200 150 L250 80 L300 100 L1000 100" />
+</svg>
+
+<script>
+// Texte progressif
+const text = "Inès, je voulais simplement prendre un moment pour te souhaiter une année aussi brillante que ton intelligence, aussi douce que ton sourire, et aussi forte que ta détermination. Le monde aura beaucoup de chance d’avoir une médecin comme toi.";
+let index = 0;
+
+function typeEffect() {
+    if (index < text.length) {
+        document.getElementById("typedText").innerHTML += text.charAt(index);
+        index++;
+        setTimeout(typeEffect, 35);
+    }
+}
+typeEffect();
+
+// Signature surprise
+function showSignature() {
+    document.getElementById("signature").style.opacity = "1";
+}
+
+// Particules
+for (let i = 0; i < 45; i++) {
+    let particle = document.createElement("div");
+    particle.className = "particle";
+    particle.style.width = particle.style.height = Math.random() * 6 + "px";
+    particle.style.left = Math.random() * 100 + "vw";
+    particle.style.animationDuration = (Math.random() * 6 + 6) + "s";
+    document.body.appendChild(particle);
+}
+</script>
+
+</body>
+</html>
