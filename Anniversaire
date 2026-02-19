@@ -1,192 +1,1404 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Joyeux Anniversaire Inès</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audit Propreté GXO - Next Gen</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <!-- Police moderne -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
 
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+  <style>
+    /* =========================
+       VARIABLES & RESET
+    ========================== */
+    :root {
+      /* Palette style GXO */
+      --gxo-orange: #FF3A00;
+      --gxo-orange-light: #FF6A33;
+      --gxo-dark: #0F172A;
+      --gxo-slate: #334155;
+      --gxo-slate-light: #94A3B8;
+      --gxo-bg: #F8FAFC;
+      --gxo-white: #FFFFFF;
+      --gxo-success: #10B981;
+      --gxo-warning: #F59E0B;
+      --gxo-danger: #EF4444;
 
-body {
-    font-family: 'Poppins', sans-serif;
-    background: radial-gradient(circle at top, #0f2027, #203a43, #1c1c1c);
-    height: 100vh;
-    overflow: hidden;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
 
-/* Glass Card */
-.container {
-    position: relative;
-    backdrop-filter: blur(20px);
-    background: rgba(255, 255, 255, 0.07);
-    padding: 50px;
-    border-radius: 30px;
-    text-align: center;
-    max-width: 650px;
-    width: 90%;
-    box-shadow: 0 0 60px rgba(0,0,0,0.6);
-    animation: fadeIn 2s ease;
-    z-index: 2;
-}
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1),
+                   0 4px 6px -2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
 
-h1 {
-    font-size: 2.7em;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-.name {
-    color: #00f5d4;
-    font-weight: 700;
-}
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--gxo-bg);
+      color: var(--gxo-dark);
+      line-height: 1.5;
+      background-image: radial-gradient(#E2E8F0 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
 
-.subtitle {
-    font-weight: 300;
-    margin-bottom: 25px;
-    opacity: 0.8;
-}
+    /* =========================
+       LAYOUT GLOBAL
+    ========================== */
+    .app-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
 
-.message {
-    font-size: 1.2em;
-    line-height: 1.6;
-    min-height: 80px;
-}
+    /* HEADER */
+    header {
+      background: var(--gxo-dark);
+      color: white;
+      padding: 16px 24px;
+      border-radius: var(--radius-lg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
 
-.signature {
-    margin-top: 30px;
-    font-weight: 500;
-    opacity: 0;
-    transition: 1s;
-}
+    header::after {
+      content: "";
+      position: absolute;
+      top: 0; right: 0; bottom: 0;
+      width: 220px;
+      background: linear-gradient(90deg, transparent, rgba(255,58,0,0.2));
+      pointer-events: none;
+    }
 
-.heart {
-    font-size: 2em;
-    margin-top: 20px;
-    animation: beat 1.4s infinite;
-    color: #ff4d6d;
-}
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
 
-/* ECG */
-.ecg {
-    position: absolute;
-    bottom: 0;
-    width: 200%;
-    height: 150px;
-    opacity: 0.4;
-}
+    .brand-logo {
+      width: 44px;
+      height: 44px;
+      background: var(--gxo-orange);
+      color: white;
+      font-weight: 800;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.1);
+    }
 
-path {
-    stroke: #00f5d4;
-    stroke-width: 3;
-    fill: none;
-    stroke-dasharray: 1000;
-    stroke-dashoffset: 1000;
-    animation: ecgMove 5s linear infinite;
-}
+    .brand-text h1 {
+      font-size: 20px;
+      font-weight: 700;
+    }
 
-@keyframes ecgMove {
-    0% { stroke-dashoffset: 1000; }
-    100% { stroke-dashoffset: 0; }
-}
+    .brand-text span {
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+    }
 
-@keyframes beat {
-    0%,100% { transform: scale(1); }
-    50% { transform: scale(1.25); }
-}
+    .header-controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
 
-@keyframes fadeIn {
-    from {opacity: 0; transform: translateY(40px);}
-    to {opacity: 1; transform: translateY(0);}
-}
+    .status-pill {
+      background: rgba(255,255,255,0.06);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
 
-/* Particles */
-.particle {
-    position: absolute;
-    background: rgba(255,255,255,0.25);
-    border-radius: 50%;
-    animation: float linear infinite;
-}
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--gxo-success);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--gxo-success);
+    }
 
-@keyframes float {
-    from { transform: translateY(100vh); }
-    to { transform: translateY(-10vh); }
-}
+    .header-version {
+      font-size: 11px;
+      color: rgba(255,255,255,0.7);
+    }
 
-/* Button */
-button {
-    margin-top: 25px;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 30px;
-    background: #00f5d4;
-    color: #000;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
-}
+    /* =========================
+       MAIN GRID
+    ========================== */
+    .main-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 24px;
+      flex: 1;
+    }
 
-button:hover {
-    transform: scale(1.05);
-    background: #00c9a7;
-}
-</style>
+    @media (max-width: 1100px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* CARDS GLOBALES */
+    .card {
+      background: var(--gxo-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      border: 1px solid #E2E8F0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .card-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid #F1F5F9;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      background: #FFFFFF;
+    }
+
+    .card-title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .card-title {
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--gxo-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-badge {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(255,58,0,0.08);
+      color: var(--gxo-orange);
+      border: 1px solid rgba(255,58,0,0.25);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .card-subtitle {
+      font-size: 13px;
+      color: var(--gxo-slate-light);
+    }
+
+    .card-body {
+      padding: 20px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* =========================
+       FORMULAIRE INFOS AUDIT
+    ========================== */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px 20px;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gxo-slate);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .helper-text {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--gxo-slate-light);
+    }
+
+    .form-input,
+    .form-select {
+      padding: 10px 12px;
+      border: 1px solid #CBD5E1;
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 14px;
+      background: #F8FAFC;
+      transition: all 0.18s;
+    }
+
+    .form-input:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: var(--gxo-orange);
+      box-shadow: 0 0 0 3px rgba(255,58,0,0.15);
+      background: #FFFFFF;
+    }
+
+    /* Sélecteur de zone (boutons) */
+    .zone-selector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .zone-btn {
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid #CBD5E1;
+      background: #FFFFFF;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gxo-slate);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .zone-btn:hover {
+      background: #F8FAFC;
+    }
+
+    .zone-btn.active {
+      background: var(--gxo-orange);
+      color: #FFFFFF;
+      border-color: var(--gxo-orange);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 6px rgba(255,58,0,0.2);
+    }
+
+    /* =========================
+       CHECKLIST (TABLE)
+    ========================== */
+    .checklist-wrapper {
+      border-radius: var(--radius-md);
+      border: 1px solid #E2E8F0;
+      overflow: hidden;
+      background: #FFFFFF;
+    }
+
+    .checklist-header {
+      padding: 10px 14px;
+      background: #F8FAFC;
+      border-bottom: 1px solid #E2E8F0;
+      font-size: 12px;
+      color: var(--gxo-slate-light);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .checklist-count {
+      font-weight: 600;
+      color: var(--gxo-slate);
+    }
+
+    .checklist-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .checklist-table th {
+      text-align: left;
+      padding: 10px 12px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--gxo-slate-light);
+      background: #F8FAFC;
+      border-bottom: 1px solid #E2E8F0;
+    }
+
+    .checklist-table td {
+      padding: 12px;
+      border-bottom: 1px solid #F1F5F9;
+      vertical-align: middle;
+    }
+
+    .checklist-row:hover {
+      background: #F8FAFC;
+    }
+
+    .critere-title {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 4px;
+      display: block;
+      color: var(--gxo-slate);
+    }
+
+    .critere-zone {
+      font-size: 11px;
+      color: var(--gxo-slate-light);
+      background: #F1F5F9;
+      padding: 2px 6px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    .note-select {
+      width: 100%;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #E2E8F0;
+      font-size: 13px;
+      cursor: pointer;
+      background: #FFFFFF;
+      transition: all 0.15s;
+    }
+
+    .note-bien {
+      border-left: 4px solid var(--gxo-success);
+      background: #ECFDF5;
+      color: #065F46;
+    }
+
+    .note-moyen {
+      border-left: 4px solid var(--gxo-warning);
+      background: #FFFBEB;
+      color: #92400E;
+    }
+
+    .note-mauvais {
+      border-left: 4px solid var(--gxo-danger);
+      background: #FEF2F2;
+      color: #991B1B;
+    }
+
+    .comment-input {
+      width: 100%;
+      font-size: 12px;
+      padding: 7px 8px;
+      border-radius: 6px;
+      border: 1px dashed #CBD5E1;
+      background: #F8FAFC;
+      transition: all 0.15s;
+    }
+
+    .comment-input:focus {
+      outline: none;
+      border-color: var(--gxo-orange);
+      background: #FFFFFF;
+    }
+
+    .proof-area {
+      width: 100%;
+      min-height: 52px;
+      border: 2px dashed #CBD5E1;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      background: #F8FAFC;
+      font-size: 11px;
+      color: var(--gxo-slate-light);
+      text-align: center;
+      padding: 4px;
+      transition: all 0.2s;
+    }
+
+    .proof-area:hover {
+      border-color: var(--gxo-orange);
+      background: #FFF7F0;
+      color: var(--gxo-slate);
+    }
+
+    .proof-area input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    /* =========================
+       ACTIONS & SCORE
+    ========================== */
+    .actions-row {
+      margin-top: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+      box-shadow: var(--shadow-md);
+      background: #E5E7EB;
+      color: var(--gxo-slate);
+    }
+
+    .btn-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      background: white;
+    }
+
+    .btn-primary {
+      background: var(--gxo-orange);
+      color: #FFFFFF;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 12px rgba(255,58,0,0.35);
+    }
+
+    .btn-secondary {
+      background: #FFFFFF;
+      color: var(--gxo-slate);
+    }
+
+    .btn-secondary:hover {
+      background: #F9FAFB;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid #E5E7EB;
+      box-shadow: none;
+    }
+
+    .btn-ghost:hover {
+      background: #F9FAFB;
+    }
+
+    .score-chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #F1F5F9;
+      border: 1px solid #E2E8F0;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+    }
+
+    .score-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 3px solid var(--gxo-orange);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 12px;
+      background: #FFFFFF;
+    }
+
+    .score-status {
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--gxo-slate);
+    }
+
+    .score-detail {
+      font-size: 11px;
+      color: var(--gxo-slate-light);
+    }
+
+    /* =========================
+       COLONNE DROITE : SYNTHÈSE
+    ========================== */
+    .summary-meta {
+      font-size: 13px;
+      background: #F8FAFC;
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+      border: 1px dashed #E2E8F0;
+      margin-bottom: 14px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .summary-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--gxo-slate-light);
+    }
+
+    .summary-value {
+      font-weight: 600;
+      color: var(--gxo-slate);
+    }
+
+    .score-card {
+      border-radius: var(--radius-lg);
+      padding: 16px 16px 14px 16px;
+      background: radial-gradient(circle at top left, #FF3A0020, #0F172A 55%), #020617;
+      color: white;
+      box-shadow: 0 18px 40px rgba(15,23,42,0.55);
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .score-card::after {
+      content: "";
+      position: absolute;
+      inset: -30%;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(255,255,255,0.18), transparent 55%),
+        radial-gradient(circle at 90% 100%, rgba(255,58,0,0.35), transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .score-card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .score-badge {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.75);
+      border: 1px solid rgba(148,163,184,0.6);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .score-main {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .score-main-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .score-main-percent {
+      font-size: 32px;
+      font-weight: 800;
+    }
+
+    .score-main-label {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .score-main-chip {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.7);
+      border: 1px solid rgba(148,163,184,0.6);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .score-main-right {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      border: 3px solid rgba(148,163,184,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .score-ring {
+      position: absolute;
+      inset: 10px;
+      border-radius: 50%;
+      border: 4px solid rgba(255,58,0,0.9);
+      box-shadow: 0 0 18px rgba(255,58,0,0.8);
+    }
+
+    .score-ring-inner {
+      width: 68%;
+      height: 68%;
+      border-radius: 50%;
+      background: rgba(15,23,42,0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .score-footer {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 10px;
+    }
+
+    .score-scale {
+      flex: 1;
+      height: 5px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--gxo-danger), var(--gxo-warning), var(--gxo-success));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .score-indicator {
+      position: absolute;
+      top: -3px;
+      width: 2px;
+      height: 11px;
+      border-radius: 999px;
+      background: white;
+      box-shadow: 0 0 10px rgba(255,255,255,0.9);
+      left: 0%;
+    }
+
+    .score-legend {
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      opacity: 0.8;
+    }
+
+    .nc-list {
+      max-height: 180px;
+      overflow-y: auto;
+      border-radius: var(--radius-md);
+      border: 1px solid #E2E8F0;
+      background: #FFFFFF;
+      padding: 8px;
+      font-size: 12px;
+    }
+
+    .nc-item {
+      padding: 6px 8px;
+      border-radius: 8px;
+      background: #FEF2F2;
+      border: 1px solid rgba(248,113,113,0.5);
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .nc-label {
+      font-weight: 600;
+      color: #991B1B;
+      margin-bottom: 2px;
+    }
+
+    .nc-comment {
+      font-size: 11px;
+      color: #9A3412;
+    }
+
+    .nc-zone-tag {
+      font-size: 10px;
+      background: #F1F5F9;
+      border-radius: 999px;
+      padding: 2px 6px;
+      color: #475569;
+      height: fit-content;
+      white-space: nowrap;
+    }
+
+    .summary-actions {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    footer {
+      margin-top: 10px;
+      font-size: 11px;
+      color: #9CA3AF;
+      text-align: center;
+    }
+
+    /* Impression */
+    @media print {
+      header,
+      .summary-actions,
+      .btn,
+      .zone-selector {
+        display: none !important;
+      }
+
+      body {
+        background: #FFFFFF;
+      }
+
+      .app-container {
+        padding: 0;
+      }
+
+      .card,
+      .score-card {
+        box-shadow: none;
+      }
+    }
+  </style>
 </head>
-
 <body>
+<div class="app-container">
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <div class="brand-logo">GXO</div>
+      <div class="brand-text">
+        <h1>Audit Propreté – Entrepôt</h1>
+        <span>Interface Next Gen – QSE / 5S</span>
+      </div>
+    </div>
+    <div class="header-controls">
+      <div class="status-pill">
+        <span class="status-dot"></span>
+        Mode audit actif
+      </div>
+      <div class="header-version">
+        v1.0 • Prototype interne
+      </div>
+    </div>
+  </header>
 
-<div class="container">
-    <h1>Joyeux Anniversaire <span class="name">Inès Ighil Agha</span> 🎉</h1>
-    <div class="subtitle">Future grande médecin 🩺</div>
-    <div class="message" id="typedText"></div>
-    <button onclick="showSignature()">Une petite surprise</button>
-    <div class="signature" id="signature">Continue d'inspirer, de soigner et d'illuminer autour de toi. 🌟</div>
-    <div class="heart">🫀</div>
+  <!-- CONTENU PRINCIPAL -->
+  <div class="main-grid">
+    <!-- COLONNE GAUCHE : FORM + CHECKLIST -->
+    <section class="card">
+      <div class="card-header">
+        <div class="card-title-block">
+          <div class="card-title">
+            Paramètres de l’audit
+            <span class="card-badge">Obligatoire</span>
+          </div>
+          <div class="card-subtitle">
+            Complète les informations puis sélectionne la zone (ND4, CD5, RIU, ECOM) pour charger la checklist dédiée.
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <!-- FORM INFOS AUDIT -->
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label" for="auditeur">
+              Nom de l’auditeur
+              <span class="helper-text">Ex : Ahmed Benali</span>
+            </label>
+            <input class="form-input" type="text" id="auditeur" placeholder="Nom & prénom">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="dateAudit">
+              Date de l’audit
+              <span class="helper-text">JJ/MM/AAAA</span>
+            </label>
+            <input class="form-input" type="date" id="dateAudit">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="zone">
+              Zone auditée
+              <span class="helper-text">Sélectionne la zone cible</span>
+            </label>
+            <select class="form-select" id="zone">
+              <option value="">-- Sélectionner la zone --</option>
+              <option value="ND4">ND4</option>
+              <option value="CD5">CD5</option>
+              <option value="RIU">RIU</option>
+              <option value="ECOM">ECOM</option>
+            </select>
+            <div class="zone-selector">
+              <button type="button" class="zone-btn" data-zone="ND4">ND4</button>
+              <button type="button" class="zone-btn" data-zone="CD5">CD5</button>
+              <button type="button" class="zone-btn" data-zone="RIU">RIU</button>
+              <button type="button" class="zone-btn" data-zone="ECOM">ECOM</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="typeAudit">
+              Type d’audit
+              <span class="helper-text">Périodicité</span>
+            </label>
+            <select class="form-select" id="typeAudit">
+              <option value="Hebdomadaire">Hebdomadaire</option>
+              <option value="Mensuel">Mensuel</option>
+              <option value="Inopiné">Inopiné</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- CHECKLIST -->
+        <div class="card-header" style="border-radius: var(--radius-md); padding: 14px 16px; margin: 0 0 10px 0; border: 1px solid #E2E8F0;">
+          <div class="card-title-block">
+            <div class="card-title" style="font-size: 15px;">
+              Checklist de propreté
+            </div>
+            <div class="card-subtitle" id="subtitleChecklist">
+              Choisis une zone (ex : CD5) pour charger automatiquement les critères spécifiques.
+            </div>
+          </div>
+        </div>
+
+        <div class="checklist-wrapper">
+          <div class="checklist-header">
+            <span>Critères par zone</span>
+            <span class="checklist-count" id="checklistCount">0 critère</span>
+          </div>
+          <table class="checklist-table">
+            <thead>
+              <tr>
+                <th style="width: 32%;">Critère</th>
+                <th style="width: 20%;">Évaluation</th>
+                <th>Commentaire / action</th>
+                <th style="width: 20%;">Preuve</th>
+              </tr>
+            </thead>
+            <tbody id="criteresContainer">
+            </tbody>
+          </table>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="actions-row">
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-primary" id="btnCalcul">
+              <span class="btn-icon">%</span>
+              Calculer le score
+            </button>
+            <button class="btn btn-secondary" onclick="window.print()">
+              <span class="btn-icon">⧉</span>
+              Exporter PDF
+            </button>
+          </div>
+          <div class="score-chip">
+            <div class="score-circle" id="scoreCircle">--</div>
+            <div>
+              <div class="score-status" id="scoreStatus">En attente</div>
+              <div class="score-detail" id="scoreDetail">Aucun calcul effectué.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COLONNE DROITE : SYNTHÈSE -->
+    <aside class="card">
+      <div class="card-header">
+        <div class="card-title-block">
+          <div class="card-title">
+            Synthèse management
+          </div>
+          <div class="card-subtitle">
+            Vue globale pour revue QSE / comité de direction.
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <!-- META AUDIT -->
+        <div class="summary-meta">
+          <div class="summary-row">
+            <div class="summary-label">Auditeur</div>
+            <div class="summary-value" id="metaAuditeur">-</div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-label">Date</div>
+            <div class="summary-value" id="metaDate">-</div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-label">Zone</div>
+            <div class="summary-value" id="metaZone">-</div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-label">Type d’audit</div>
+            <div class="summary-value" id="metaType">-</div>
+          </div>
+        </div>
+
+        <!-- SCORE CARD -->
+        <div class="score-card">
+          <div class="score-card-inner">
+            <div class="score-badge">
+              Score global propreté
+            </div>
+            <div class="score-main">
+              <div class="score-main-left">
+                <div class="score-main-percent" id="mainPercent">--%</div>
+                <div class="score-main-label" id="mainLabel">
+                  En attente d’évaluation.
+                </div>
+                <div class="score-main-chip" id="mainChip">
+                  Trend : N/A
+                </div>
+              </div>
+              <div class="score-main-right">
+                <div class="score-ring"></div>
+                <div class="score-ring-inner" id="ringInner">--</div>
+              </div>
+            </div>
+            <div class="score-footer">
+              <div class="score-scale">
+                <div class="score-indicator" id="scoreIndicator"></div>
+              </div>
+              <div class="score-legend">Insuffisant • Acceptable • Très bon</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NC / POINTS D’ATTENTION -->
+        <div style="font-size:12px; color:var(--gxo-slate-light); margin-bottom:4px;">
+          Non-conformités / points d’attention
+        </div>
+        <div class="nc-list" id="ncList">
+          <div style="font-size:12px; color:#6B7280;">
+            Aucune non-conformité tant que le score n’est pas calculé.
+          </div>
+        </div>
+
+        <!-- ACTIONS SYNTHÈSE -->
+        <div class="summary-actions">
+          <button class="btn btn-ghost" id="btnReset">Réinitialiser l’audit</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    Outil interne GXO – Audit Propreté / 5S – Prototype visuel pour managers & équipe QSE.
+  </footer>
 </div>
 
-<svg class="ecg" viewBox="0 0 1000 200">
-    <path d="M0 100 L100 100 L150 50 L200 150 L250 80 L300 100 L1000 100" />
-</svg>
-
+<!-- =========================
+     JAVASCRIPT : LOGIQUE
+========================== -->
 <script>
-// Texte progressif
-const text = "Inès, je voulais simplement prendre un moment pour te souhaiter une année aussi brillante que ton intelligence, aussi douce que ton sourire, et aussi forte que ta détermination. Le monde aura beaucoup de chance d’avoir une médecin comme toi.";
-let index = 0;
+  // Checklist par zone
+  const ZONE_CHECKLISTS = {
+    ND4: [
+      { id: "ND4_SOL", libelle: "Sols – allées principales ND4", zone: "ND4" },
+      { id: "ND4_RANG", libelle: "Rangements – zones picking ND4", zone: "ND4" },
+      { id: "ND4_DECH", libelle: "Déchets – bacs & compacteur ND4", zone: "ND4" },
+      { id: "ND4_SANI", libelle: "Sanitaires ND4", zone: "ND4" },
+      { id: "ND4_DOCK", libelle: "Quais – zone ND4", zone: "ND4" }
+    ],
+    CD5: [
+      { id: "CD5_SOL", libelle: "Sols – CD5 (allées, zones de travail)", zone: "CD5" },
+      { id: "CD5_POSTE", libelle: "Postes de travail – CD5", zone: "CD5" },
+      { id: "CD5_EQUIP", libelle: "Équipements manutention (chariots, transpalettes)", zone: "CD5" },
+      { id: "CD5_DECH", libelle: "Gestion des déchets – CD5", zone: "CD5" },
+      { id: "CD5_ZONE_SENS", libelle: "Zones sensibles / sécurité – CD5", zone: "CD5" },
+      { id: "CD5_SIGNAL", libelle: "Signalisation & marquage au sol – CD5", zone: "CD5" }
+    ],
+    RIU: [
+      { id: "RIU_SOL", libelle: "Sols – zone RIU", zone: "RIU" },
+      { id: "RIU_STOCK", libelle: "Stockage – conformité & propreté RIU", zone: "RIU" },
+      { id: "RIU_RET", libelle: "Zone retours / RIU", zone: "RIU" },
+      { id: "RIU_DECH", libelle: "Zone déchets / RIU", zone: "RIU" }
+    ],
+    ECOM: [
+      { id: "ECOM_PACK", libelle: "Postes de packing / e-commerce", zone: "ECOM" },
+      { id: "ECOM_SOL", libelle: "Sols – zone e-commerce", zone: "ECOM" },
+      { id: "ECOM_BUREAU", libelle: "Bureaux d’exploitation e-commerce", zone: "ECOM" },
+      { id: "ECOM_DECH", libelle: "Déchets & cartons – e-commerce", zone: "ECOM" },
+      { id: "ECOM_IT", libelle: "Postes informatiques – écrans, périphériques", zone: "ECOM" }
+    ]
+  };
 
-function typeEffect() {
-    if (index < text.length) {
-        document.getElementById("typedText").innerHTML += text.charAt(index);
-        index++;
-        setTimeout(typeEffect, 35);
+  const VALEURS = {
+    "Bien": 2,
+    "Moyen": 1,
+    "Mauvais": 0,
+    "NA": null
+  };
+
+  const criteresContainer = document.getElementById("criteresContainer");
+  const checklistCount = document.getElementById("checklistCount");
+  const subtitleChecklist = document.getElementById("subtitleChecklist");
+  const zoneSelect = document.getElementById("zone");
+  const zoneButtons = document.querySelectorAll(".zone-btn");
+
+  const btnCalcul = document.getElementById("btnCalcul");
+  const btnReset = document.getElementById("btnReset");
+
+  const metaAuditeur = document.getElementById("metaAuditeur");
+  const metaDate = document.getElementById("metaDate");
+  const metaZone = document.getElementById("metaZone");
+  const metaType = document.getElementById("metaType");
+
+  const scoreCircle = document.getElementById("scoreCircle");
+  const scoreStatus = document.getElementById("scoreStatus");
+  const scoreDetail = document.getElementById("scoreDetail");
+  const mainPercent = document.getElementById("mainPercent");
+  const mainLabel = document.getElementById("mainLabel");
+  const mainChip = document.getElementById("mainChip");
+  const ringInner = document.getElementById("ringInner");
+  const scoreIndicator = document.getElementById("scoreIndicator");
+  const ncList = document.getElementById("ncList");
+
+  const inputAuditeur = document.getElementById("auditeur");
+  const inputDate = document.getElementById("dateAudit");
+  const inputTypeAudit = document.getElementById("typeAudit");
+
+  function formatDateFR(dateStr) {
+    if (!dateStr) return "-";
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return "-";
+    const jour = String(d.getDate()).padStart(2, "0");
+    const mois = String(d.getMonth() + 1).padStart(2, "0");
+    const annee = d.getFullYear();
+    return jour + "/" + mois + "/" + annee;
+  }
+
+  // Construction de la checklist
+  function buildChecklist(zone) {
+    criteresContainer.innerHTML = "";
+    const list = ZONE_CHECKLISTS[zone] || [];
+    checklistCount.textContent = list.length + (list.length > 1 ? " critères" : " critère");
+
+    if (list.length === 0) {
+      subtitleChecklist.textContent =
+        "Aucune checklist spécifique pour cette zone. Choisis ND4, CD5, RIU ou ECOM.";
+      return;
     }
-}
-typeEffect();
 
-// Signature surprise
-function showSignature() {
-    document.getElementById("signature").style.opacity = "1";
-}
+    subtitleChecklist.textContent =
+      "Checklist spécifique zone " + zone + " – " + list.length + " critères.";
 
-// Particules
-for (let i = 0; i < 45; i++) {
-    let particle = document.createElement("div");
-    particle.className = "particle";
-    particle.style.width = particle.style.height = Math.random() * 6 + "px";
-    particle.style.left = Math.random() * 100 + "vw";
-    particle.style.animationDuration = (Math.random() * 6 + 6) + "s";
-    document.body.appendChild(particle);
-}
+    list.forEach((crit, index) => {
+      const tr = document.createElement("tr");
+      tr.className = "checklist-row";
+      tr.dataset.idCritere = crit.id;
+
+      // Colonne critère
+      const tdCrit = document.createElement("td");
+      const spanTitle = document.createElement("span");
+      spanTitle.className = "critere-title";
+      spanTitle.textContent = (index + 1) + ". " + crit.libelle;
+      const spanZone = document.createElement("span");
+      spanZone.className = "critere-zone";
+      spanZone.textContent = crit.zone;
+      tdCrit.appendChild(spanTitle);
+      tdCrit.appendChild(spanZone);
+
+      // Colonne note
+      const tdNote = document.createElement("td");
+      const select = document.createElement("select");
+      select.className = "note-select";
+      select.innerHTML = `
+        <option value="">-- Choisir --</option>
+        <option value="Bien">Bien</option>
+        <option value="Moyen">Moyen</option>
+        <option value="Mauvais">Mauvais</option>
+        <option value="NA">Non applicable</option>
+      `;
+      select.addEventListener("change", () => {
+        select.classList.remove("note-bien", "note-moyen", "note-mauvais");
+        if (select.value === "Bien") {
+          select.classList.add("note-bien");
+        } else if (select.value === "Moyen") {
+          select.classList.add("note-moyen");
+        } else if (select.value === "Mauvais") {
+          select.classList.add("note-mauvais");
+        }
+      });
+      tdNote.appendChild(select);
+
+      // Colonne commentaire
+      const tdComment = document.createElement("td");
+      const inputComment = document.createElement("input");
+      inputComment.type = "text";
+      inputComment.className = "comment-input";
+      inputComment.placeholder = "Commentaire / action corrective si nécessaire";
+      tdComment.appendChild(inputComment);
+
+      // Colonne preuve
+      const tdProof = document.createElement("td");
+      const proof = document.createElement("div");
+      proof.className = "proof-area";
+      proof.innerHTML = 'Ajouter une photo<br><span>(glisser-déposer ou cliquer)</span>';
+      const inputFile = document.createElement("input");
+      inputFile.type = "file";
+      inputFile.accept = "image/*";
+      proof.appendChild(inputFile);
+      tdProof.appendChild(proof);
+
+      tr.appendChild(tdCrit);
+      tr.appendChild(tdNote);
+      tr.appendChild(tdComment);
+      tr.appendChild(tdProof);
+
+      criteresContainer.appendChild(tr);
+    });
+  }
+
+  function setZone(zone) {
+    zoneSelect.value = zone;
+    zoneButtons.forEach(btn => {
+      if (btn.dataset.zone === zone) {
+        btn.classList.add("active");
+      } else {
+        btn.classList.remove("active");
+      }
+    });
+    buildChecklist(zone);
+  }
+
+  zoneSelect.addEventListener("change", (e) => {
+    setZone(e.target.value);
+  });
+
+  zoneButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const z = btn.dataset.zone;
+      setZone(z);
+    });
+  });
+
+  // Calcul du score
+  function calculerScore() {
+    const auditeur = inputAuditeur.value.trim();
+    const dateAudit = inputDate.value;
+    const zone = zoneSelect.value;
+    const typeAudit = inputTypeAudit.value;
+
+    if (!auditeur || !dateAudit || !zone) {
+      alert("Merci de renseigner le nom de l’auditeur, la date et la zone avant de calculer le score.");
+      return;
+    }
+
+    const rows = criteresContainer.querySelectorAll(".checklist-row");
+    if (rows.length === 0) {
+      alert("Veuillez d’abord sélectionner une zone pour charger la checklist.");
+      return;
+    }
+
+    let total = 0;
+    let max = 0;
+    let nbNA = 0;
+    const ncItems = [];
+
+    for (const row of rows) {
+      const select = row.querySelector(".note-select");
+      const comment = row.querySelector(".comment-input");
+      const label = row.querySelector(".critere-title").textContent;
+      const zoneTag = row.querySelector(".critere-zone").textContent;
+
+      const val = select.value;
+      if (!val) {
+        alert("Merci d’évaluer tous les critères (Bien, Moyen, Mauvais ou NA).");
+        return;
+      }
+
+      if (val === "NA") {
+        nbNA++;
+        continue;
+      }
+
+      const score = VALEURS[val];
+      if (score !== null) {
+        total += score;
+        max += 2;
+      }
+
+      if (val === "Moyen" || val === "Mauvais") {
+        ncItems.push({
+          label,
+          zone: zoneTag,
+          comment: comment.value.trim(),
+          gravite: val === "Mauvais" ? "Majeure" : "Mineure"
+        });
+      }
+    }
+
+    if (max === 0) {
+      alert("Tous les critères sont NA, score impossible à calculer.");
+      return;
+    }
+
+    const pourcentage = Math.round((total / max) * 100);
+
+    // MAJ méta
+    metaAuditeur.textContent = auditeur || "-";
+    metaDate.textContent = formatDateFR(dateAudit);
+    metaZone.textContent = zone || "-";
+    metaType.textContent = typeAudit || "-";
+
+    // Score visuel
+    scoreCircle.textContent = pourcentage + "%";
+    mainPercent.textContent = pourcentage + "%";
+    ringInner.textContent = pourcentage;
+    scoreIndicator.style.left = pourcentage + "%";
+
+    let couleurStatus = "#EF4444";
+    let textStatus = "Insuffisant";
+    let textLabel = "Niveau de propreté non conforme, plan d’actions immédiat requis.";
+    let textChip = "Trend : niveau rouge – priorité management.";
+
+    if (pourcentage >= 80) {
+      couleurStatus = "#10B981";
+      textStatus = "Très bon";
+      textLabel = "Propreté maîtrisée, niveau conforme aux attentes GXO.";
+      textChip = "Trend : niveau vert – maintenir dans le temps.";
+    } else if (pourcentage >= 60) {
+      couleurStatus = "#F59E0B";
+      textStatus = "Acceptable";
+      textLabel = "Propreté globalement correcte mais des écarts restent à traiter.";
+      textChip = "Trend : niveau jaune – plan d’actions à suivre.";
+    }
+
+    scoreStatus.textContent = textStatus;
+    scoreStatus.style.color = couleurStatus;
+    mainLabel.textContent = textLabel;
+    mainChip.textContent = textChip;
+    mainChip.style.borderColor = couleurStatus;
+
+    scoreDetail.textContent =
+      "Score calculé sur " + rows.length + " critère(s), dont " + nbNA + " non applicable(s).";
+
+    // NC
+    ncList.innerHTML = "";
+    if (ncItems.length === 0) {
+      const div = document.createElement("div");
+      div.style.fontSize = "12px";
+      div.style.color = "#166534";
+      div.textContent = "Aucune non-conformité : tous les critères sont en « Bien » ou NA.";
+      ncList.appendChild(div);
+    } else {
+      ncItems.forEach(item => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "nc-item";
+
+        const left = document.createElement("div");
+        const labelEl = document.createElement("div");
+        labelEl.className = "nc-label";
+        labelEl.textContent = item.label;
+        const commentEl = document.createElement("div");
+        commentEl.className = "nc-comment";
+        commentEl.textContent =
+          (item.gravite === "Majeure" ? "[NC majeure] " : "[NC mineure] ") +
+          (item.comment || "Commentaire non renseigné");
+        left.appendChild(labelEl);
+        left.appendChild(commentEl);
+
+        const right = document.createElement("div");
+        right.className = "nc-zone-tag";
+        right.textContent = item.zone;
+
+        wrapper.appendChild(left);
+        wrapper.appendChild(right);
+        ncList.appendChild(wrapper);
+      });
+    }
+  }
+
+  btnCalcul.addEventListener("click", () => {
+    calculerScore();
+  });
+
+  btnReset.addEventListener("click", () => {
+    if (!confirm("Réinitialiser entièrement l’audit ?")) return;
+
+    inputAuditeur.value = "";
+    inputDate.value = "";
+    zoneSelect.value = "";
+    inputTypeAudit.value = "Hebdomadaire";
+
+    zoneButtons.forEach(b => b.classList.remove("active"));
+    criteresContainer.innerHTML = "";
+    checklistCount.textContent = "0 critère";
+    subtitleChecklist.textContent =
+      "Choisis une zone (ex : CD5) pour charger automatiquement les critères spécifiques.";
+
+    metaAuditeur.textContent = "-";
+    metaDate.textContent = "-";
+    metaZone.textContent = "-";
+    metaType.textContent = "-";
+
+    scoreCircle.textContent = "--";
+    scoreStatus.textContent = "En attente";
+    scoreStatus.style.color = "#4B5563";
+    scoreDetail.textContent = "Aucun calcul effectué.";
+    mainPercent.textContent = "--%";
+    mainLabel.textContent = "En attente d’évaluation.";
+    mainChip.textContent = "Trend : N/A";
+    ringInner.textContent = "--";
+    scoreIndicator.style.left = "0%";
+
+    ncList.innerHTML =
+      '<div style="font-size:12px; color:#6B7280;">Aucune non-conformité tant que le score n’est pas calculé.</div>';
+  });
 </script>
+</body>
+</html>
+
 
 </body>
 </html>
